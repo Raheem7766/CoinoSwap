@@ -3,9 +3,14 @@ import { IoMdEye } from "react-icons/io";
 import { Edit, Copy, Trash2, Eye, EyeOff, Plus, X } from "lucide-react";
 import Account from "./tabs/Account";
 import Widget from "./tabs/Widget";
+import Button from "./tabs/Button";
+import Banner from "./tabs/Banner";
+import Exchange from "./tabs/Exchange";
+import Stats from "./tabs/Stats";
+import Payout from "./tabs/Payout";
 
 export default function Header() {
-  const [activeTab, setActiveTab] = useState("Widget");
+  const [activeTab, setActiveTab] = useState("Payouts");
 
   const renderTabContent = () => {
     switch (activeTab) {
@@ -23,33 +28,33 @@ export default function Header() {
         );
       case "Button":
         return (
-          <div className="col-span-2 bg-white rounded-2xl p-6 text-center">
-            Button Content
-          </div>
+          <>
+            <Button />
+          </>
         );
       case "Banner":
         return (
-          <div className="col-span-2 bg-white rounded-2xl p-6 text-center">
-            Banner Content
-          </div>
+          <>
+            <Banner />
+          </>
         );
       case "Exchanges":
         return (
-          <div className="col-span-2 bg-white rounded-2xl p-6 text-center">
-            Exchanges Content
-          </div>
+          <>
+            <Exchange />
+          </>
         );
       case "Daily Stats":
         return (
-          <div className="col-span-2 bg-white rounded-2xl p-6 text-center">
-            Daily Stats Content
-          </div>
+          <>
+            <Stats />
+          </>
         );
       case "Payouts":
         return (
-          <div className="col-span-2 bg-white rounded-2xl p-6 text-center">
-            Payouts Content
-          </div>
+          <>
+            <Payout />
+          </>
         );
       default:
         return null;
@@ -149,9 +154,7 @@ export default function Header() {
               ))}
             </div>
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 rounded-[20px] p-4 bg-black">
-            {renderTabContent()}
-          </div>
+          <div>{renderTabContent()}</div>
         </div>
       </div>
     </div>
