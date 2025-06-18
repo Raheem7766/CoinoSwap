@@ -1,9 +1,16 @@
 import React, { useState } from "react";
 import { IoMdEye } from "react-icons/io";
-import { Edit, Copy, Trash2, Eye, EyeOff, Plus, X } from "lucide-react";
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  ButtonGroup,
+  Button,
+} from "react-bootstrap";
 import Account from "./tabs/Account";
 import Widget from "./tabs/Widget";
-import Button from "./tabs/Button";
+import ButtonTab from "./tabs/Button"; 
 import Banner from "./tabs/Banner";
 import Exchange from "./tabs/Exchange";
 import Stats from "./tabs/Stats";
@@ -15,148 +22,122 @@ export default function Header() {
   const renderTabContent = () => {
     switch (activeTab) {
       case "Account":
-        return (
-          <>
-            <Account />
-          </>
-        );
+        return <Account />;
       case "Widget":
-        return (
-          <>
-            <Widget />
-          </>
-        );
+        return <Widget />;
       case "Button":
-        return (
-          <>
-            <Button />
-          </>
-        );
+        return <ButtonTab />;
       case "Banner":
-        return (
-          <>
-            <Banner />
-          </>
-        );
+        return <Banner />;
       case "Exchanges":
-        return (
-          <>
-            <Exchange />
-          </>
-        );
+        return <Exchange />;
       case "Daily Stats":
-        return (
-          <>
-            <Stats />
-          </>
-        );
+        return <Stats />;
       case "Payouts":
-        return (
-          <>
-            <Payout />
-          </>
-        );
+        return <Payout />;
       default:
         return null;
     }
   };
 
+  const cardData = [
+    "Total Turnover",
+    "Total Profit",
+    "Ready to Payout",
+    "Completed Exchanges",
+  ];
+
   return (
-    <div>
-      <h2 className="text-[40px] font-bold text-white text-center mt-4">
-        Partner <span className="text-[#F4A70B]"> Account</span>
+    <div className="bg-black text-white py-4 ">
+      <h2 className="text-center fw-bold" style={{ fontSize: "40px" }}>
+        Partner <span style={{ color: "#F4A70B" }}>Account</span>
       </h2>
-      <div className="flex flex-wrap justify-center gap-4 p-4 pb-1 w-full mt-10">
-        <div className="w-[23%] h-auto pb-2 px-2 bg-[#1A1918] rounded-[20px]">
-          <div className="h-auto w-full flex items-center justify-between px-4 pt-2">
-            <h2 className="text-[22px] font-semibold text-white">
-              Total Turnover
-            </h2>
-            <div className="text-gray-400">
-              <IoMdEye size={22} />
-            </div>
-          </div>
-          <div className="w-full h-[100px] bg-white rounded-[20px] flex flex-col justify-center pl-4 mt-2 ">
-            <h3 className="text-[34px] font-bold text-[#F4A70B]">0.004 ₿</h3>
-            <p className="text-[16px] font-medium text-black">~6542,25 USD</p>
-          </div>
-        </div>
-        <div className="w-[23%] h-auto pb-2 px-2 bg-[#1A1918] rounded-[20px]">
-          <div className="h-auto w-full flex items-center justify-between px-4 pt-2">
-            <h2 className="text-[22px] font-semibold text-white">
-              Total Profit
-            </h2>
-            <div className="text-gray-400">
-              <IoMdEye size={22} />
-            </div>
-          </div>
-          <div className="w-full h-[100px] bg-white rounded-[20px] flex flex-col justify-center pl-4 mt-2 ">
-            <h3 className="text-[34px] font-bold text-[#F4A70B]">0.004 ₿</h3>
-            <p className="text-[16px] font-medium text-black">~6542,25 USD</p>
-          </div>
-        </div>
-        <div className="w-[23%] h-auto pb-2 px-2 bg-[#1A1918] rounded-[20px]">
-          <div className="h-auto w-full flex items-center justify-between px-4 pt-2">
-            <h2 className="text-[22px] font-semibold text-white">
-              Ready to Payout
-            </h2>
-            <div className="text-gray-400">
-              <IoMdEye size={22} />
-            </div>
-          </div>
-          <div className="w-full h-[100px] bg-white rounded-[20px] flex flex-col justify-center pl-4 mt-2 ">
-            <h3 className="text-[34px] font-bold text-[#F4A70B]">0.004 ₿</h3>
-            <p className="text-[16px] font-medium text-black">~6542,25 USD</p>
-          </div>
-        </div>
-        <div className="w-[23%] h-auto pb-2 px-2 bg-[#1A1918] rounded-[20px]">
-          <div className="h-auto w-full flex items-center justify-between px-4 pt-2">
-            <h2 className="text-[22px] font-semibold text-white">
-              Completed Exchanges
-            </h2>
-            <div className="text-gray-400">
-              <IoMdEye size={22} />
-            </div>
-          </div>
-          <div className="w-full h-[100px] bg-white rounded-[20px] flex flex-col justify-center pl-4 mt-2 ">
-            <h3 className="text-[34px] font-bold text-[#F4A70B]">0.004 ₿</h3>
-            <p className="text-[16px] font-medium text-black">~6542,25 USD</p>
-          </div>
-        </div>
-      </div>
-      <p className="text-[16px] font-medium text-white ml-14">
-        Partner Share 0.5%
-      </p>
-      <div className="min-h-screen bg-black px-14 mt-14">
-        <div className="bg-gray-100 rounded-[20px] border border-white pt-2">
-          <div className="px-4">
-            <div className="flex justify-between mb-2">
-              {[
-                "Account",
-                "Widget",
-                "Button",
-                "Banner",
-                "Exchanges",
-                "Daily Stats",
-                "Payouts",
-              ].map((tab) => (
-                <button
-                  key={tab}
-                  onClick={() => setActiveTab(tab)}
-                  className={`px-6 py-2 rounded-full cursor-pointer text-sm font-medium ${
-                    activeTab === tab
-                      ? "bg-black text-white"
-                      : "text-black hover:bg-gray-50"
-                  }`}
-                >
-                  {tab}
-                </button>
-              ))}
-            </div>
-          </div>
+
+      <Container fluid className="mt-5 px-4">
+        <Row className="g-4 justify-content-center">
+          {cardData.map((title, idx) => (
+            <Col md={6} lg={3} key={idx}>
+              <Card
+                style={{ backgroundColor: "#1A1918", borderRadius: "20px" }}
+              >
+                <Card.Body className="px-3 pt-3 pb-1">
+                  <div className="d-flex justify-content-between align-items-center">
+                    <h5
+                      className="text-white fw-semibold"
+                      style={{ fontSize: "22px" }}
+                    >
+                      {title}
+                    </h5>
+                    <IoMdEye color="gray" size={22} />
+                  </div>
+                  <div
+                    className="bg-white mt-3 px-3 py-2 d-flex flex-column justify-content-center"
+                    style={{ borderRadius: "20px", height: "100px" }}
+                  >
+                    <h3
+                      className="fw-bold"
+                      style={{ fontSize: "34px", color: "#F4A70B" }}
+                    >
+                      0.004 ₿
+                    </h3>
+                    <p
+                      className="mb-0 fw-medium text-dark"
+                      style={{ fontSize: "16px" }}
+                    >
+                      ~6542,25 USD
+                    </p>
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+
+        <p className="mt-3 ms-3 fw-medium" style={{ fontSize: "16px" }}>
+          Partner Share 0.5%
+        </p>
+      </Container>
+
+      <Container fluid className="mt-5 px-4">
+        <div
+          className="p-0 pt-3"
+          style={{
+            backgroundColor: "#f8f9fa",
+            borderRadius: "20px",
+            border: "1px solid white",
+          }}
+        >
+          <ButtonGroup className="d-flex flex-wrap gap-4 mb-3">
+            {[
+              "Account",
+              "Widget",
+              "Button",
+              "Banner",
+              "Exchanges",
+              "Daily Stats",
+              "Payouts",
+            ].map((tab, index) => (
+              <Button
+                key={index}
+                onClick={() => setActiveTab(tab)}
+                variant="link"
+                style={{
+                  backgroundColor: activeTab === tab ? "black" : "transparent",
+                  color: activeTab === tab ? "white" : "black",
+                  fontWeight: activeTab === tab ? "500" : "700",
+                  borderRadius: activeTab === tab ? "999px" : "999px",
+                  padding: activeTab === tab ? "0.5rem 1rem" : "0",
+                  textDecoration: "none",
+                }}
+              >
+                {tab}
+              </Button>
+            ))}
+          </ButtonGroup>
+
           <div>{renderTabContent()}</div>
         </div>
-      </div>
+      </Container>
     </div>
   );
 }

@@ -1,12 +1,21 @@
-import { Copy, Trash2, X } from "lucide-react";
 import React, { useState } from "react";
-import { BsSpeedometer2 } from "react-icons/bs";
+import { Copy, Trash2, X } from "lucide-react";
 import { MdEdit } from "react-icons/md";
 import { SiOpenlayers } from "react-icons/si";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Card,
+  Modal,
+  Form,
+} from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-export default function Button() {
+export default function Buttons() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [buttonName, setButtonName] = useState("Button #2");
   const [selectedSize, setSelectedSize] = useState("250×40");
@@ -45,189 +54,205 @@ export default function Button() {
 
   return (
     <>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 rounded-[20px] p-4 bg-black">
-        <div className="flex w-full gap-4">
-          <div className="w-max h-max bg-white py-3 pb-0 rounded-[20px] border border-white">
-            <div className="px-3">
-              <button
-                className="w-[600px] bg-black text-white cursor-pointer py-1 px-4 rounded-full mb-4 font-medium"
-                onClick={openModal}
-              >
-                + Create New Button
-              </button>
-            </div>
-            {isModalOpen && (
-              <div
-                className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-                style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
-              >
-                <div className="bg-white rounded-2xl py-2 pb-4 pt-2 w-full max-w-lg relative">
-                  <div className="px-4">
-                    <button
-                      onClick={closeModal}
-                      className="absolute top-2 right-2 cursor-pointer w-8 h-8 bg-black text-white rounded-full flex items-center justify-center hover:bg-gray-800 transition-colors"
-                    >
-                      <X size={16} />
-                    </button>
-                    <h2 className="text-xl font-bold text-center text-black mb-6">
-                      Create Button
-                    </h2>
+      <div className="bg-black rounded-3xl p-3">
+        <Row className="g-4">
+          <Col xs={12} lg={6}>
+            <Card className="bg-white rounded-3 border border-white">
+              <Card.Body className="p-3 pb-0 px-0">
+                <div className="px-3">
+                  <Button
+                    variant="dark"
+                    className="w-100 py-1 px-4 rounded-pill mb-3 fw-medium bg-black"
+                    onClick={openModal}
+                    style={{ maxWidth: "full" }}
+                  >
+                    + Create New Button
+                  </Button>
+                </div>
 
-                    <div className="mb-6">
-                      <label className="block text-sm font-bold text-black mb-2">
-                        Button Name
-                      </label>
-                      <input
-                        type="text"
-                        value={buttonName}
-                        onChange={(e) => setButtonName(e.target.value)}
-                        className="w-full px-3 py-2 bg-gray-100 rounded-[40px] border-none outline-none"
-                        placeholder="Enter button name"
-                      />
-                    </div>
+                {/* Create Button Modal */}
+                <Modal show={isModalOpen} onHide={closeModal} centered>
+                  <Modal.Body className="bg-white rounded-3 p-3 px-0 position-relative">
+                    <div className="px-3">
+                      <Button
+                        onClick={closeModal}
+                        className="position-absolute top-0 end-0 m-2 bg-black text-white rounded-circle d-flex align-items-center justify-content-center"
+                        style={{ width: "40px", height: "40px" }}
+                      >
+                        <X size={16} />
+                      </Button>
 
-                    <div className="mb-6">
-                      <label className="block text-sm font-bold text-black mb-2">
-                        Choose Size
-                      </label>
-                      <div className="flex gap-3 ">
-                        {sizes.map((size) => (
-                          <label
-                            key={size.value}
-                            className={`flex items-center justify-center px-3 gap-1 cursor-pointer rounded-[40px] ${
-                              selectedSize === size.value
-                                ? "bg-[#F4A70B] text-black"
-                                : "bg-gray-200 text-gray-700"
-                            }`}
-                          >
-                            <input
+                      <h2 className="text-center fw-bold text-dark mb-4">
+                        Create Button
+                      </h2>
+
+                      <Form.Group className="mb-4">
+                        <Form.Label className="fw-bold text-dark small">
+                          Button Name
+                        </Form.Label>
+                        <Form.Control
+                          type="text"
+                          value={buttonName}
+                          onChange={(e) => setButtonName(e.target.value)}
+                          className="bg- rounded-pill border-0"
+                          placeholder="Enter button name"
+                          style={{backgroundColor:'#E2E2E2'}}
+                        />
+                      </Form.Group>
+
+                      <Form.Group className="mb-4">
+                        <Form.Label className="fw-bold text-dark small">
+                          Choose Size
+                        </Form.Label>
+                        <div className="d-flex gap-3">
+                          {sizes.map((size) => (
+                            <Form.Check
+                              key={size.value}
                               type="radio"
+                              id={`size-${size.value}`}
                               name="size"
+                              label={size.label}
                               value={size.value}
                               checked={selectedSize === size.value}
                               onChange={(e) => setSelectedSize(e.target.value)}
-                              className=""
-                            />
-                            <span
-                              className={`py-1 text-sm font-medium${
+                              className={`rounded-pill px-3 ${
                                 selectedSize === size.value
-                                  ? " text-black"
-                                  : "bg-gray-200 text-gray-700"
+                                  ? "bg-warning text-dark"
+                                  : "bg-light"
                               }`}
-                            >
-                              {size.label}
-                            </span>
-                          </label>
-                        ))}
+                            />
+                          ))}
+                        </div>
+                      </Form.Group>
+                    </div>
+                    <Form.Group className="mb-4">
+                      <Form.Label className="fw-bold text-dark small px-3">
+                        Preview
+                      </Form.Label>
+                      <div className="bg-black p-4 rounded-2xl flex items-center justify-center">
+                        <Button
+                          variant="warning"
+                          className="w-50 fw-bold rounded-2 bg-gradient"
+                        >
+                          Exchange Crypto
+                        </Button>
+                      </div>
+                    </Form.Group>
+
+                    <Button variant="dark" className="w-100 rounded-pill bg-black">
+                      Confirm
+                    </Button>
+                  </Modal.Body>
+                </Modal>
+
+                {/* Delete Button Modal */}
+                <Modal
+                  show={showDeleteModal}
+                  onHide={() => setshowDeleteModal(false)}
+                  centered
+                >
+                  <Modal.Body className="bg-white p-3 rounded-3">
+                    <h2 className="fs-5 fw-bold mb-3 pe-4">
+                      Are You Sure You Want To Delete This Widget?
+                    </h2>
+                    <div className="d-flex justify-content-center gap-2">
+                      <Button
+                        variant="danger"
+                        className="w-50 rounded-3xl py-2"
+                        onClick={handleDelete}
+                        style={{
+                          borderRadius: "40px",
+                          backgroundColor: "#ff0000",
+                        }}
+                      >
+                        Delete
+                      </Button>
+                      <Button
+                        variant="light"
+                        className="w-50 rounded-3xl py-2"
+                        onClick={() => setshowDeleteModal(false)}
+                        style={{
+                          borderRadius: "40px",
+                          backgroundColor: "#E2E2E2",
+                        }}
+                      >
+                        Cancel
+                      </Button>
+                    </div>
+                  </Modal.Body>
+                </Modal>
+
+                <div className="bg-black rounded-3 p-3">
+                  <div className="d-flex align-items-center justify-content-between gap-10 text-white w-100 bg-white rounded-pill border border-white ps-4">
+                    <SiOpenlayers className="text-dark" size={28} />
+
+                    <div className="d-flex align-items-center justify-content-between px-4 w-100 py-3 bg-black rounded-pill">
+                      <div className="d-flex align-items-center gap-2">
+                        <div
+                          className="bg-warning rounded-circle"
+                          style={{ width: "12px", height: "12px" }}
+                        ></div>
+                        <span className="text-warning">Button #01</span>
+                      </div>
+                      <div>
+                        <Button variant="link" className="p-2 rounded-circle">
+                          <MdEdit className="text-white" size={16} />
+                        </Button>
+                        <Button
+                          variant="link"
+                          className="p-2 rounded-circle"
+                          onClick={() => setshowDeleteModal(true)}
+                        >
+                          <Trash2 className="text-white" size={16} />
+                        </Button>
                       </div>
                     </div>
                   </div>
-
-                  <div className="mb-4">
-                    <label className="block text-sm font-bold text-black mb-2 px-4">
-                      Preview
-                    </label>
-                    <div className="bg-black py-5 px-30 rounded-[20px]">
-                      <button className="w-full bg-gradient-to-r from-[#F49F0A] to-[#F36403] text-black font-bold py-2 rounded-[10px] hover:from-[#F36403] hover:to-[#F49F0A] transition-all duration-200 cursor-pointer">
-                        Exchange Crypto
-                      </button>
-                    </div>
-                  </div>
-                  <div className="px-4">
-                    <button className="w-full bg-black text-white py-1 rounded-full font-medium hover:bg-gray-800">
-                      Confirm
-                    </button>
-                  </div>
                 </div>
-              </div>
-            )}
+              </Card.Body>
+            </Card>
+          </Col>
 
-            {showDeleteModal && (
-              <div
-                className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50"
-                style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
-              >
-                <div className="bg-white p-2 px-3 rounded-[20px] shadow-lg w-90">
-                  <h2 className="text-[20px]  font-bold mb-4 pr-10">
-                    Are You Sure You Want To Delete This Widget?
+          <Col xs={12} lg={6}>
+            <Card className="bg-white rounded-3 border border-gray-700">
+              <Card.Body className="pt-4">
+                <div className="mb-4 px-2">
+                  <h2 className="text-black fs-2 fw-bold mb-2">
+                    Button #01 (360x60)
                   </h2>
-                  <div className="flex justify-center gap-1">
-                    <button
-                      className="bg-red-600 text-white w-[50%] cursor-pointer px-4 py-2 rounded-[20px] hover:bg-red-700 transition"
-                      onClick={handleDelete}
+                  <p className="text-gray-500 small">
+                    Use the code below to embed This widget Into your website.
+                  </p>
+                </div>
+
+                <div className="bg-black rounded-3 p-4">
+                  <div className="border-2 border-secondary rounded-2 p-3 mb-4">
+                    <code className="text-warning d-block text-break">
+                      {iframeCode}
+                    </code>
+                    <Button
+                      variant="outline-light"
+                      className="rounded-pill mt-3 d-flex align-items-center gap-2 small"
+                      onClick={handleCopyCode}
                     >
-                      Delete
-                    </button>
-                    <button
-                      className="bg-gray-200 w-[50%] cursor-pointer px-4 py-2 rounded-[20px] hover:bg-gray-300 transition"
-                      onClick={() => setshowDeleteModal(false)}
+                      <span>Copy Code</span>
+                      <Copy size={16} />
+                    </Button>
+                  </div>
+                  <div className="d-flex justify-content-center">
+                    <Button
+                      variant="warning"
+                      className="fw-bold fs-4 px-5 rounded-3 bg-gradient"
                     >
-                      Cancel
-                    </button>
+                      Exchange Crypto
+                    </Button>
                   </div>
                 </div>
-              </div>
-            )}
-
-            <div className="bg-black rounded-[20px] p-4 py-4">
-              <div className="flex items-center justify-between text-white w-full bg-white rounded-[40px] border border-white pl-5">
-                <SiOpenlayers className="text-black" size={28} />
-
-                <div className="flex items-center justify-between px-4 w-[90%] py-4 bg-black rounded-[40px]">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
-                    <span className="text-yellow-400">Button #01</span>
-                  </div>
-                  <div>
-                    <button className="p-2 rounded-full transition-colors">
-                      <MdEdit className="w-4 h-4 cursor-pointer text-white" />
-                    </button>
-                    <button
-                      className="p-2 rounded-full transition-colors"
-                      onClick={() => setshowDeleteModal(true)}
-                    >
-                      <Trash2 className="w-4 h-4 cursor-pointer text-white" />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex-1 max-w-md">
-            <div className="bg-white rounded-[20px] pt-4 w-[730px] h-max border border-gray-700">
-              <div className="mb-6 px-6">
-                <h2 className="text-black text-[30px] font-bold mb-2">
-                  Button #01 (360x60)
-                </h2>
-                <p className="text-gray-400 text-sm">
-                  Use the code below to embed This widget Into your website.
-                </p>
-              </div>
-
-              <div className="bg-black rounded-[20px] p-4">
-                <div className="border-2 border-[#232221] rounded-[10px] p-3 mb-6">
-                  <code className="text-yellow-400 text-md break-all">
-                    {iframeCode}
-                  </code>
-                  <button
-                    className="border border-white cursor-pointer text-white px-4 py-2 rounded-[20px] mt-3 flex items-center space-x-2 text-sm transition-colors"
-                    onClick={handleCopyCode}
-                  >
-                    <span>Copy Code</span>
-                    <Copy className="w-4 h-4 cursor-pointer" />
-                  </button>
-                </div>
-                <div className="flex items-center justify-center">
-                  <button className="w-max bg-gradient-to-r from-[#F49F0A] to-[#F36403] text-black text-[24px] font-bold py-2 px-18 rounded-2xl hover:from-[#F36403] hover:to-[#F49F0A] transition-all duration-200 cursor-pointer">
-                    Exchange Crypto
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <ToastContainer position="top-right" autoClose={3000} />
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+        <ToastContainer position="top-end" autoClose={3000} />
       </div>
     </>
   );

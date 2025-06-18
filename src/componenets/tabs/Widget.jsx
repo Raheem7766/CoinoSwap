@@ -3,6 +3,16 @@ import { ChevronDown, RefreshCw, Copy, Trash2, Check } from "lucide-react";
 import { BsSpeedometer2 } from "react-icons/bs";
 import { MdEdit } from "react-icons/md";
 import { X } from "lucide-react";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Card,
+  Modal,
+  Form,
+} from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function Widget() {
   const [sendAmount, setSendAmount] = useState("400");
@@ -38,353 +48,406 @@ export default function Widget() {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 rounded-[20px] p-4 bg-black">
-      <div className="flex w-full gap-4">
-        <div className="w-max h-max bg-white py-3 pb-0 rounded-[20px] border border-white">
-          <div className="px-3">
-            <button
-              className="w-[600px] bg-black text-white cursor-pointer py-1 px-4 rounded-full mb-4 font-medium"
-              onClick={() => setShowCreateModal(true)}
-            >
-              + Create New Widget
-            </button>
-          </div>
+    <div className="bg-black rounded-3xl p-3">
+      <Row className="g-4">
+        <Col xs={12} lg={6}>
+          <Card className="bg-white rounded-3 border border-white">
+            <Card.Body className="p-3 px-0 pb-0">
+              <div className="px-3">
+                <Button
+                  variant="dark"
+                  className="w-100 py-1 px-4 rounded-pill mb-3 fw-medium"
+                  onClick={() => setShowCreateModal(true)}
+                  style={{ backgroundColor: "black" }}
+                >
+                  + Create New Widget
+                </Button>
+              </div>
 
-          <div className="bg-black rounded-[20px] p-4 py-4">
-            <div className="flex items-center justify-between text-white w-full bg-white rounded-[40px] border border-white pl-5">
-              <BsSpeedometer2 className="text-black" size={28} />
+              <div className="bg-black rounded-3 p-4 py-3">
+                <div className="d-flex align-items-center justify-content-between gap-10 text-white w-100 bg-white rounded-pill border border-white ps-4">
+                  <BsSpeedometer2 className="text-dark" size={28} />
 
-              <div className="flex items-center justify-between px-4 w-[90%] py-4 bg-black rounded-[40px]">
-                <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
-                  <span className="text-yellow-400">Widget #01</span>
+                  <div className="d-flex align-items-center justify-content-between px-4 w-100 py-3 bg-black rounded-pill">
+                    <div className="d-flex align-items-center gap-2">
+                      <div
+                        className="bg-warning rounded-circle"
+                        style={{ width: "12px", height: "12px" }}
+                      ></div>
+                      <span className="text-warning">Widget #01</span>
+                    </div>
+                    <div>
+                      <Button variant="link" className="p-2 rounded-circle">
+                        <MdEdit className="text-white" size={16} />
+                      </Button>
+                      <Button
+                        variant="link"
+                        className="p-2 rounded-circle"
+                        onClick={() => setshowDeleteModal(true)}
+                      >
+                        <Trash2 className="text-white" size={16} />
+                      </Button>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <button className="p-2 rounded-full transition-colors">
-                    <MdEdit className="w-4 h-4 cursor-pointer text-white" />
-                  </button>
-                  <button
-                    className="p-2 rounded-full transition-colors"
-                    onClick={() => setshowDeleteModal(true)}
+              </div>
+            </Card.Body>
+          </Card>
+        </Col>
+
+
+        <Col xs={12} lg={6}>
+          <Card className="bg-white rounded-3 border border-gray-700 px-0">
+            <Card.Body className="pt-4">
+              <div className="mb-4 px-2">
+                <h2 className="text-dark fs-2 fw-bold mb-2">Widget #01</h2>
+                <p className="text-gray-500 small">
+                  Use The Code Below To Embed This Widget Into Your Website.
+                </p>
+              </div>
+
+              <div className="bg-black rounded-3 p-3">
+                <div className="border-2 border-secondary rounded-2 p-3 mb-4">
+                  <code className="text-warning d-block text-break">
+                    &lt;iframe Src="" Style="Border:0px #f1f1f1 None;"
+                    Name="myiFrame" Scrolling="No" Frameborder="1"
+                    Marginheight="0px" Marginwidth="0px" Height="400px"
+                    Width="600px" Allowfullscreen&gt;&lt;/iframe&gt;
+                  </code>
+                  <Button
+                    variant="outline-light"
+                    onClick={handleCopyCode}
+                    className="rounded-pill mt-3 d-flex align-items-center gap-2 small"
                   >
-                    <Trash2 className="w-4 h-4 cursor-pointer text-white" />
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        {showCreateModal && (
-          <div
-            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
-            style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
-          >
-            <div className="bg-white rounded-2xl p-6 pt-2 w-full max-w-lg relative">
-              <button
-                onClick={() => setShowCreateModal(false)}
-                className="absolute top-1 right-1 p-1 cursor-pointer bg-black rounded-full"
-              >
-                <X className="w-4 h-4 font-bold text-white" />
-              </button>
-
-              <h2 className="text-xl font-bold text-center text-black mb-6">
-                Create New Widget
-              </h2>
-
-              <div className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-bold text-black mb-2">
-                      Widget Name
-                    </label>
-                    <input
-                      type="text"
-                      value={widgetName}
-                      onChange={(e) => setWidgetName(e.target.value)}
-                      className="w-full px-3 py-2 bg-gray-200 border-0 rounded-[40px] text-black placeholder-gray-500"
-                      placeholder="Widget #2"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-bold text-black mb-2">
-                      Default Amount
-                    </label>
-                    <input
-                      type="text"
-                      value={defaultAmount}
-                      onChange={(e) => setDefaultAmount(e.target.value)}
-                      className="w-full px-3 py-2 bg-gray-200 border-0 rounded-[40px] text-black placeholder-gray-500"
-                      placeholder="01"
-                    />
-                  </div>
+                    <span>Copy Code</span>
+                    <Copy size={16} />
+                  </Button>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-bold text-black mb-2">
-                      Set Default Send Coin
-                    </label>
-                    <div className="relative">
-                      <select
-                        value={defaultSendCoin}
-                        onChange={(e) => setDefaultSendCoin(e.target.value)}
-                        className="w-full px-3 py-2 bg-gray-200 border-0 rounded-[40px] text-black appearance-none cursor-pointer"
-                      >
-                        <option value="BTC">BTC</option>
-                        <option value="ETH">ETH</option>
-                        <option value="USDT">USDT</option>
-                      </select>
-                      <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-600 pointer-events-none" />
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-bold text-black mb-2">
-                      Set Default Recieve Coin
-                    </label>
-                    <div className="relative">
-                      <select
-                        value={defaultReceiveCoin}
-                        onChange={(e) => setDefaultReceiveCoin(e.target.value)}
-                        className="w-full px-3 py-2 bg-gray-200 border-0 rounded-[40px] text-black appearance-none cursor-pointer"
-                      >
-                        <option value="ETH">ETH</option>
-                        <option value="BTC">BTC</option>
-                        <option value="USDT">USDT</option>
-                      </select>
-                      <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-600 pointer-events-none" />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-bold text-black mb-2">
-                      Choose Exchange Partners
-                    </label>
-                    <div className="relative">
-                      <select
-                        value={exchangePartners}
-                        onChange={(e) => setExchangePartners(e.target.value)}
-                        className="w-full px-3 py-2 bg-gray-200 border-0 rounded-[40px] text-black appearance-none cursor-pointer"
-                      >
-                        <option value="All">All</option>
-                        <option value="Binance">Binance</option>
-                        <option value="Coinbase">Coinbase</option>
-                      </select>
-                      <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-600 pointer-events-none" />
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-bold text-black mb-2">
-                      Choose Color Theme
-                    </label>
-                    <div className="flex space-x-2">
-                      <div className="w-8 h-8 bg-black rounded-full flex items-center justify-center">
-                        <Check className="text-[#E99F0B] text-sm" />
+                <div className="w-100">
+                  <div className="bg-white rounded-4 p-3 border border-gray-800">
+                    <div className="px-3">
+                      <div className="d-flex mb-4 rounded-3 bg-light">
+                        <Button
+                          variant="dark"
+                          className="w-50 py-3 rounded-pill fw-semibold fs-5 bg-black"
+                        >
+                          Exchange Crypto
+                        </Button>
+                        <Button
+                          variant="light"
+                          className="w-50 py-3 rounded-pill fw-semibold fs-5 position-relative ps-5 d-flex align-items-center"
+                        >
+                          Buy/Sell Crypto 💳
+                          <span className="bg-orange-500 w-max text-[12px] position-absolute top-0 start-55 translate-middle text-white px-2 py-1 rounded-pill d-flex align-items-center">
+                            Available Soon
+                          </span>
+                        </Button>
                       </div>
-                      <div className="w-8 h-8 bg-white border border-gray-400 rounded-full "></div>
                     </div>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="flex items-center gap-2">
-                    <label className="relative inline-flex items-center cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={enableLogo}
-                        onChange={(e) => setEnableLogo(e.target.checked)}
-                        className="sr-only peer"
-                      />
-                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#E99F0B]"></div>
-                    </label>
-                    <span className="text-sm font-bold text-black">
-                      Enable CoinSwap Logo
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <label className="relative inline-flex items-center cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={shortFormat}
-                        onChange={(e) => setShortFormat(e.target.checked)}
-                        className="sr-only peer"
-                      />
-                      <div className="w-11 h-6 bg-black peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-gray-400"></div>
-                    </label>
-                    <span className="text-sm font-bold text-black">
-                      Short Widget Format
-                    </span>
-                  </div>
-                </div>
-
-                <button
-                  onClick={() => setShowCreateModal(false)}
-                  className="w-full bg-black text-white font-semibold py-3 rounded-full mt-6 hover:bg-gray-800 transition-colors"
-                >
-                  Confirm
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {showDeleteModal && (
-          <div
-            className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50"
-            style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
-          >
-            <div className="bg-white p-2 px-3 rounded-[20px] shadow-lg w-90">
-              <h2 className="text-[20px]  font-bold mb-4 pr-10">
-                Are You Sure You Want To Delete This Widget?
-              </h2>
-              <div className="flex justify-center gap-1">
-                <button
-                  className="bg-red-600 text-white w-[50%] cursor-pointer px-4 py-2 rounded-[20px] hover:bg-red-700 transition"
-                  onClick={handleDelete}
-                >
-                  Delete
-                </button>
-                <button
-                  className="bg-gray-200 w-[50%] cursor-pointer px-4 py-2 rounded-[20px] hover:bg-gray-300 transition"
-                  onClick={() => setshowDeleteModal(false)}
-                >
-                  Cancel
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        <div className="flex-1 max-w-md">
-          <div className="bg-white rounded-[20px] pt-4 w-[730px] h-max border border-gray-700">
-            <div className="mb-6 px-6">
-              <h2 className="text-black text-[30px] font-bold mb-2">
-                Widget #01
-              </h2>
-              <p className="text-gray-400 text-sm">
-                Use The Code Below To Embed This Widget Into Your Website.
-              </p>
-            </div>
-
-            <div className="bg-black rounded-[20px] p-4">
-              <div className="border-2 border-[#232221] rounded-[10px] p-3 mb-6">
-                <code className="text-yellow-400 text-md break-all">
-                  &lt;iframe Src="" Style="Border:0px #f1f1f1 None;"
-                  Name="myiFrame" Scrolling="No" Frameborder="1"
-                  Marginheight="0px" Marginwidth="0px" Height="400px"
-                  Width="600px" Allowfullscreen&gt;&lt;/iframe&gt;
-                </code>
-                <button
-                  onClick={handleCopyCode}
-                  className="border border-white cursor-pointer text-white px-4 py-2 rounded-[20px] mt-3 flex items-center space-x-2 text-sm transition-colors"
-                >
-                  <span>Copy Code</span>
-                  <Copy className="w-4 h-4" />
-                </button>
-              </div>
-
-              <div className="w-full">
-                <div className="bg-white rounded-3xl p-6 border border-gray-800">
-                  <div className="px-4">
-                    <div className="flex mb-6 rounded-[20px] bg-[#E8E6E5]">
-                      <button className=" text-white w-[50%] py-3 bg-black rounded-full font-semibold text-[18px]">
-                        Exchange Crypto
-                      </button>
-                      <button className="text-black w-[50%] py-3 rounded-full font-semibold text-[18px] relative pl-16 flex items-center">
-                        Buy/Sell Crypto 💳
-                        <span className="bg-orange-500 absolute top-[-8px] right-10 text-white text-xs px-2 py-1 rounded-full flex items-center">
-                          Available Soon
-                        </span>
-                      </button>
-                    </div>
-                  </div>
-                  <div className="bg-black rounded-[20px] p-4">
-                    <div className="">
-                      <div className="rounded-2xl p-4 border border-gray-700">
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <div className="text-gray-400 text-sm mb-2">
-                              You Send:
+                    <div className="bg-black rounded-3xl p-4">
+                      <div className="">
+                        <div className="rounded-3 p-4 border border-gray-700">
+                          <div className="d-flex align-items-center justify-content-between">
+                            <div>
+                              <div className="text-gray-500 small mb-2">
+                                You Send:
+                              </div>
+                              <Form.Control
+                                type="text"
+                                value={sendAmount}
+                                onChange={(e) => setSendAmount(e.target.value)}
+                                className="bg-transparent text-white fs-3 fw-semibold border-0 shadow-none px-0"
+                              />
                             </div>
-                            <input
-                              type="text"
-                              value={sendAmount}
-                              onChange={(e) => setSendAmount(e.target.value)}
-                              className="bg-transparent text-white text-2xl font-semibold outline-none w-full"
-                            />
-                          </div>
 
-                          <div className="flex items-center bg-[#1B1A1A] rounded-[10px] px-3 py-4 ml-4">
-                            <div className="w-6 h-6 bg-orange-500 rounded-full flex items-center justify-center mr-2">
-                              <span className="text-white text-xs font-bold">
-                                ₿
+                            <div className="d-flex align-items-center bg-[#1B1B1A] rounded-2 px-3 py-3 ms-3">
+                              <div
+                                className="bg-orange-500 rounded-circle d-flex align-items-center justify-content-center me-2"
+                                style={{ width: "24px", height: "24px" }}
+                              >
+                                <span className="text-white small fw-bold">
+                                  ₿
+                                </span>
+                              </div>
+                              <span className="text-white fw-medium me-2">
+                                {sendCurrency}
                               </span>
+                              <span className="text-danger small border border-danger bg-opacity-20 px-2 py-1 rounded me-2">
+                                TRX
+                              </span>
+                              <ChevronDown className="text-white" size={16} />
                             </div>
-                            <span className="text-white font-medium mr-2">
-                              {sendCurrency}
-                            </span>
-                            <span className="text-red-500 text-xs bg-red-500/20 px-2 py-1 rounded mr-2">
-                              TRX
-                            </span>
-                            <ChevronDown className="text-white w-4 h-4" />
                           </div>
                         </div>
                       </div>
-                    </div>
 
-                    <div className="flex justify-center cursor-pointer">
-                      <button className="bg-white p-3 rounded-full border transition-colors">
-                        <RefreshCw className="w-5 h-5 text-black" />
-                      </button>
-                    </div>
+                      <div className="d-flex justify-content-center">
+                        <Button variant="light" className="p-3 rounded-circle">
+                          <RefreshCw className="text-dark" size={20} />
+                        </Button>
+                      </div>
 
-                    <div className="">
-                      <div className="rounded-2xl p-4 border border-gray-700">
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <div className="text-gray-400 text-sm mb-2">
-                              You Receive:
+                      <div className="">
+                        <div className="rounded-3 p-4 border border-gray-700">
+                          <div className="d-flex align-items-center justify-content-between">
+                            <div>
+                              <div className="text-gray-500 small mb-2">
+                                You Receive:
+                              </div>
+                              <p className="text-white fs-3 fw-semibold">
+                                {receiveAmount}
+                              </p>
                             </div>
-                            <p className="text-white text-2xl font-semibold">
-                              {receiveAmount}
-                            </p>
-                          </div>
 
-                          <div className="flex items-center bg-[#1B1A1A] rounded-[10px] px-3 py-1 ml-4">
-                            <span className="text-white text-[30px] font-bold">
-                              ♦
-                            </span>
-                            <span className="text-white text-xs px-2 py-1 rounded mr-2">
-                              {receiveCurrency}
-                            </span>
-                            <ChevronDown className="text-white w-4 h-4" />
+                            <div className="d-flex align-items-center bg-[#1B1B1A] rounded-2 px-3 py-1 ms-3">
+                              <span className="text-white fs-3 fw-bold">♦</span>
+                              <span className="text-white small px-2 py-1 rounded me-2">
+                                {receiveCurrency}
+                              </span>
+                              <ChevronDown className="text-white" size={16} />
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
 
-                    <div className="flex items-center gap-8 mt-4 mb-6">
-                      <div className="flex items-center text-gray-400 text-sm">
-                        <span className="text-white mr-2">♦</span>
-                        <span>Min • Amount: 0.0032427</span>
+                      <div className="d-flex align-items-center gap-5 mt-4 mb-4">
+                        <div className="d-flex align-items-center text-gray-500 small">
+                          <span className="text-white me-2">♦</span>
+                          <span>Min • Amount: 0.0032427</span>
+                        </div>
+                        <div className="d-flex align-items-center text-warning small">
+                          <span className="text-warning me-2">♦</span>
+                          <span>Estimated • 1 BTC ~ 18.849695 ETH</span>
+                        </div>
                       </div>
-                      <div className="flex items-center text-[#f4a70b] text-sm">
-                        <span className="text-yellow-500 mr-2">♦</span>
-                        <span>Estimated • 1 BTC ~ 18.849695 ETH</span>
-                      </div>
-                    </div>
 
-                    <button className="w-full bg-gradient-to-r from-[#F49F0A] to-[#F36403] text-black font-bold py-4 rounded-2xl hover:from-[#F36403] hover:to-[#F49F0A] transition-all duration-200 cursor-pointer">
-                      View Offers
-                    </button>
+                      <Button
+                        variant="warning"
+                        className="w-100 bg-gradient text-dark fw-bold py-3 rounded-3"
+                      >
+                        View Offers
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+
+      <Modal
+        show={showCreateModal}
+        onHide={() => setShowCreateModal(false)}
+        centered
+        size="md"
+      >
+        <Modal.Body className="bg-white rounded-3 p-4 position-relative">
+          <Button
+            onClick={() => setShowCreateModal(false)}
+            className="position-absolute top-0 end-0 m-2 bg-dark rounded-circle p-1"
+          >
+            <X className="text-white fw-bold" size={16} />
+          </Button>
+
+          <h2 className="text-center fw-bold text-dark mb-4">
+            Create New Widget
+          </h2>
+
+          <Form>
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label className="fw-bold text-dark small">
+                    Widget Name
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={widgetName}
+                    onChange={(e) => setWidgetName(e.target.value)}
+                    className="bg-[#E2E2E2] border-0 rounded-pill text-dark"
+                    placeholder="Widget #2"
+                    style={{ backgroundColor: "#E2E2E2" }}
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label className="fw-bold text-dark small">
+                    Default Amount
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={defaultAmount}
+                    onChange={(e) => setDefaultAmount(e.target.value)}
+                    className="bg- border-0 rounded-pill text-dark"
+                    placeholder="01"
+                    style={{ backgroundColor: "#E2E2E2" }}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label className="fw-bold text-dark small">
+                    Set Default Send Coin
+                  </Form.Label>
+                  <div className="position-relative">
+                    <Form.Select
+                      value={defaultSendCoin}
+                      onChange={(e) => setDefaultSendCoin(e.target.value)}
+                      className="bg- border-0 rounded-pill text-dark appearance-none"
+                      style={{ backgroundColor: "#E2E2E2" }}
+                    >
+                      <option value="BTC">BTC</option>
+                      <option value="ETH">ETH</option>
+                      <option value="USDT">USDT</option>
+                    </Form.Select>
+                  </div>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label className="fw-bold text-dark small">
+                    Set Default Receive Coin
+                  </Form.Label>
+                  <div className="position-relative">
+                    <Form.Select
+                      value={defaultReceiveCoin}
+                      onChange={(e) => setDefaultReceiveCoin(e.target.value)}
+                      className="bg- border-0 rounded-pill text-dark appearance-none"
+                      style={{ backgroundColor: "#E2E2E2" }}
+                    >
+                      <option value="ETH">ETH</option>
+                      <option value="BTC">BTC</option>
+                      <option value="USDT">USDT</option>
+                    </Form.Select>
+                  </div>
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label className="fw-bold text-dark small">
+                    Choose Exchange Partners
+                  </Form.Label>
+                  <div className="position-relative">
+                    <Form.Select
+                      value={exchangePartners}
+                      onChange={(e) => setExchangePartners(e.target.value)}
+                      className="bg- border-0 rounded-pill text-dark appearance-none"
+                      style={{ backgroundColor: "#E2E2E2" }}
+                    >
+                      <option value="All">All</option>
+                      <option value="Binance">Binance</option>
+                      <option value="Coinbase">Coinbase</option>
+                    </Form.Select>
+                  </div>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label className="fw-bold text-dark small">
+                    Choose Color Theme
+                  </Form.Label>
+                  <div className="d-flex gap-2">
+                    <div
+                      className="bg-dark rounded-circle d-flex align-items-center justify-content-center"
+                      style={{ width: "32px", height: "32px" }}
+                    >
+                      <Check className="text-warning small" />
+                    </div>
+                    <div
+                      className="bg-white border border-gray-400 rounded-circle"
+                      style={{ width: "32px", height: "32px" }}
+                    ></div>
+                  </div>
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group className="d-flex align-items-center gap-2">
+                  <Form.Check
+                    type="switch"
+                    id="enable-logo"
+                    checked={enableLogo}
+                    onChange={(e) => setEnableLogo(e.target.checked)}
+                    className="me-0"
+                  />
+                  <Form.Label
+                    htmlFor="enable-logo"
+                    className="fw-bold text-dark small mb-0"
+                  >
+                    Enable CoinSwap Logo
+                  </Form.Label>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group className="d-flex align-items-center gap-2">
+                  <Form.Check
+                    type="switch"
+                    id="short-format"
+                    checked={shortFormat}
+                    onChange={(e) => setShortFormat(e.target.checked)}
+                    className="me-0"
+                  />
+                  <Form.Label
+                    htmlFor="short-format"
+                    className="fw-bold text-dark small mb-0"
+                  >
+                    Short Widget Format
+                  </Form.Label>
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Button
+              variant="dark"
+              onClick={() => setShowCreateModal(false)}
+              className="w-100 fw-semibold py-3 rounded-pill mt-4 bg-black"
+            >
+              Confirm
+            </Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
+
+      <Modal
+        show={showDeleteModal}
+        onHide={() => setshowDeleteModal(false)}
+        centered
+      >
+        <Modal.Body className="bg-white p-3 rounded-3xl">
+          <h2 className="fs-5 fw-bold mb-3 pe-4">
+            Are You Sure You Want To Delete This Widget?
+          </h2>
+          <div className="d-flex justify-content-center gap-2">
+            <Button
+              variant="danger"
+              className="w-50 rounded-3xl py-2"
+              onClick={handleDelete}
+              style={{ borderRadius: "40px",backgroundColor:'#ff0000' }}
+            >
+              Delete
+            </Button>
+            <Button
+              variant="light"
+              className="w-50 rounded-3xl py-2"
+              onClick={() => setshowDeleteModal(false)}
+              style={{ borderRadius: "40px", backgroundColor: "#E2E2E2" }}
+            >
+              Cancel
+            </Button>
           </div>
-        </div>
-      </div>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 }
